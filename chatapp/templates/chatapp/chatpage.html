@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>{{sender.username}}</div>
+<div>{{reciever.username}}</div>
+{%for message in messages%}
+<div>{{message.sender.username}}  {{message.msg_text}}</div>
+{% endfor %}
+<form action="{% url 'chatapp:chatpage' sender.id reciever.id%}" method="post">
+    {%csrf_token%}
+    {{form}}
+    <input type="submit" value="Send">
+</form>
+</body>
+</html>

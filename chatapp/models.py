@@ -12,3 +12,8 @@ class Message(models.Model):
 
     def __str__(self):
         return self.msg_text[:10]
+
+    @classmethod
+    def create(cls, msg_text, sender, reciever):
+        message = cls(msg_text=msg_text, sender=sender, reciever=reciever)
+        return message

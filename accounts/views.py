@@ -13,7 +13,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('chatapp:index'))
+            return HttpResponseRedirect(reverse('chatapp:home'))
         return HttpResponseRedirect(reverse('accounts:login'))
     return render(request, 'registration/login.html')
 
