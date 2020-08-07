@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <a href="{% url 'accounts:logout'%}">Log Out</a>
+    {% else %}
+        <a href="{% url 'accounts:login'%}">Log In</a>
+    {% endif %}
+    <form method="post" action="{% url 'chatapp:searchuser' %}">
+        {%csrf_token%}
+        {{non_field_errors}}
+        {{form}}
+        <input type="submit" value="Search">
+    </form>
+
+</body>
+</html>
