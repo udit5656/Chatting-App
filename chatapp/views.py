@@ -28,24 +28,17 @@ def home(request):
 
 
 def chatpage(request, sender_id, reciever_id):
-    if request.method == 'GET':
-        form = MessageForm()
-        sender = User.objects.get(pk=sender_id)
-        reciever = User.objects.get(pk=reciever_id)
-        messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
-                                          (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")
-        context = {'sender': sender, 'reciever': reciever, 'messages': messages, 'form': form}
-        return render(request, 'chatapp/chatpage.html', context)
-    else:
+    sender = User.objects.get(pk=sender_id)
+    reciever = User.objects.get(pk=reciever_id)
+    if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
             message_text = form.cleaned_data['message_text']
-            sender = User.objects.get(pk=sender_id)
-            reciever = User.objects.get(pk=reciever_id)
             new_message = Message.create(msg_text=message_text, sender=sender, reciever=reciever)
             new_message.save()
-            messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
-                                              (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")
-            form = MessageForm()
-            context = {'sender': sender, 'reciever': reciever, 'messages': messages, 'form': form}
-            return render(request, 'chatapp/chatpage.html', context)
+
+    messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
+                                      (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")
+    form = MessageForm()
+    context = {'sender': sender, 'reciever': reciever, 'messages': messages, 'form': form}
+    return render(request, 'chatapp/chatpage.html', context)

@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <a href="{% url 'accounts:logout' %}">Log Out</a>
+{%extends 'chatapp/base.html'%}
+{%block title%}Home{%endblock title%}
+{%block content%}
     <form method="post" action="{% url 'chatapp:home' %}">
         {%csrf_token%}
         {{form}}
         <input type="submit" value="Search">
     </form>
-</body>
-</html>
+{%endblock content%}
