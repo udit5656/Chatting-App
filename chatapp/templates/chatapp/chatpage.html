@@ -11,4 +11,7 @@
     {{form}}
     <input type="submit" value="Send">
 </form>
+<form action="{%url 'chatapp:chatpage' sender.id reciever.id%}">
+<input type="submit" value="Refresh">
+</form>
 {%endblock content%}
