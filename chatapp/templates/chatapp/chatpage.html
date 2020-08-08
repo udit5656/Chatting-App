@@ -1,11 +1,30 @@
 {% extends 'chatapp/base.html'%}
 {%block title%}Chat Page{%endblock title%}
 {%block content%}
-<div>{{sender.username}}</div>
-<div>{{reciever.username}}</div>
-{%for message in messages%}
-<div>{{message.sender.username}}  {{message.msg_text}}</div>
-{% endfor %}
+
+<div class="container">
+    <div class="row">
+        <div class="col text-left">
+            {{sender.username}}
+        </div>
+        <div class="col text-right">
+            {{reciever.username}}
+        </div>
+    </div>
+    {%for message in messages%}
+        <div class="row">
+            {%if message.sender.id == sender.id%}
+                <div class="col text-right">
+                    {{message.msg_text}}
+                </div>
+            {%else%}
+                <div class="col text-left">
+                    {{message.msg_text}}
+                </div>
+            {%endif%}
+        </div>
+    {% endfor %}
+</div>
 <form action="{% url 'chatapp:chatpage' sender.id reciever.id%}" method="post">
     {%csrf_token%}
     {{form}}
