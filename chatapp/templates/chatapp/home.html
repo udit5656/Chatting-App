@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <a href="{% url 'accounts:logout' %}">Log Out</a>
-    <form method="post" action="{% url 'chatapp:home' %}">
-        {%csrf_token%}
-        {{form}}
-        <input type="submit" value="Search">
-    </form>
-</body>
-</html>
+{%extends 'chatapp/base.html'%}
+{%block title%}Home{%endblock title%}
+{%block content%}
+<div class="container " id="form_container">
+    <div class="row ">
+        <div class="col-sm"></div>
+        <div class="col-sm-8">
+            <form method="post" action="{% url 'chatapp:home' %}" class="d-flex-row justify-content-center ">
+                {%csrf_token%}
+                {% for field in form%}
+                    <div class="form-group ">
+                        {{ field.errors }}
+                        {{ field.label_tag }}
+                        <span class=" w-100 ">
+                            {{ field }}
+                        </span>
+                    </div>
+                {%endfor%}
+                <input type="submit" class="form-control form-control-sm btn btn-primary" value="Search">
+            </form>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</div>
+{%endblock content%}
