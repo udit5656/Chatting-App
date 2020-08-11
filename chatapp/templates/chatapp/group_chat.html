@@ -1,7 +1,9 @@
 {%extends 'chatapp/base.html'%}
+{%block title%}
+Group Chat
+{%endblock title%}
 {%block content%}
 <div class="container">
-
     {%for message in messages%}
         <div class="row">
             {%if message.sender.id == sender_id%}
@@ -20,5 +22,8 @@
     {%csrf_token%}
     {{form}}
     <input type="submit" value="Send">
+</form>
+<form action="{%url 'chatapp:group_chat' group_name sender_id %}">
+<input type="submit" value="Refresh">
 </form>
 {%endblock content%}
