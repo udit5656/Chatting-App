@@ -1,0 +1,24 @@
+{%extends 'chatapp/base.html'%}
+{%block content%}
+<div class="container">
+
+    {%for message in messages%}
+        <div class="row">
+            {%if message.sender.id == sender_id%}
+                <div class="col text-right">
+                    {{message.message_text}}
+                </div>
+            {%else%}
+                <div class="col text-left">
+                    {{message.message_text}}
+                </div>
+            {%endif%}
+        </div>
+    {% endfor %}
+</div>
+<form action="{% url 'chatapp:group_chat' group_name sender_id %}" method="post">
+    {%csrf_token%}
+    {{form}}
+    <input type="submit" value="Send">
+</form>
+{%endblock content%}

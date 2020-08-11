@@ -10,3 +10,6 @@ class UserSearchForm(forms.Form):
 class MessageForm(forms.Form):
     message_text = forms.CharField(label="Enter message", max_length=50)
 
+
+class GroupSearchForm(forms.Form):
+    groupname = forms.CharField(label="Group Name", max_length=50)
