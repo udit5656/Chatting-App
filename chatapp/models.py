@@ -17,3 +17,15 @@ class Message(models.Model):
     def create(cls, msg_text, sender, reciever):
         message = cls(msg_text=msg_text, sender=sender, reciever=reciever)
         return message
+
+
+class Group(models.Model):
+    group_name = models.CharField(max_length=20)
+    members = models.ManyToManyField(User, related_name='group_members')
+
+
+class GroupMessage(models.Model):
+    message_text = models.CharField(max_length=200)
+    send_time = models.DateTimeField(default=datetime.now)
+    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, related_name='related_group', on_delete=models.CASCADE)
