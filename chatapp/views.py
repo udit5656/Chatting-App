@@ -47,14 +47,14 @@ def chatpage(request, sender_id, reciever_id):
     return render(request, 'chatapp/chatpage.html', context)
 
 
-def group_page(request):
+def group_chat(request):
     if request.method == 'POST':
         form = GroupSearchForm(request.POST)
         if form.is_valid():
             try:
                 group_name = Group.objects.get(group_name=form.cleaned_data['groupname']).group_name
                 context = {'group_name': group_name, 'sender_id': request.user.id}
-                return HttpResponseRedirect(reverse('chatapp:group_chat', kwargs=context))
+                return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
             except Group.DoesNotExist:
                 form.add_error('groupname', ValidationError("Group doesn't exist"))
         return render(request, 'chatapp/group_page.html', {'form': form})
@@ -62,7 +62,7 @@ def group_page(request):
     return render(request, 'chatapp/group_page.html', {'form': form})
 
 
-def group_chat(request, group_name, sender_id):
+def group_chat_messages(request, group_name, sender_id):
     group = Group.objects.get(group_name=group_name)
     sender = User.objects.get(pk=sender_id)
     if request.method == 'POST':

@@ -1,7 +1,7 @@
 {%extends 'chatapp/base.html'%}
 {%block title%}Group Page{%endblock title%}
 {%block content%}
-<form action="{%url 'chatapp:group_page'%}" method="post">
+<form action="{%url 'chatapp:group_chat'%}" method="post">
     {%csrf_token%}
     {{form}}
     <input type="submit" value="Search">
