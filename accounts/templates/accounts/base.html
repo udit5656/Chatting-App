@@ -1,3 +1,6 @@
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{%static 'accounts/css/bootstrap.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'accounts/css/bootstrap.min.css'%}">
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,10 +9,9 @@
     </head>
     <body>
         {% if user.is_authenticated%}
-            <a href="{%url 'accounts:logout'%}">Logout</a>
+
         {%else%}
             <a href="{% url 'accounts:login'%}">Login</a>
-
         {%endif%}
         <a href="{%url 'chatapp:home'%}">Home</a>
         {%block content%}

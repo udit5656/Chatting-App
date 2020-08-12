@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from .models import Message, Group, GroupMessage
@@ -13,7 +14,7 @@ from .forms import UserSearchForm, MessageForm, GroupSearchForm, GroupCreationFo
 
 
 # Create your views here.
-
+@method_decorator(login_required, name='dispatch')
 class HomeView(View):
     def post(self, request):
         form = UserSearchForm(request.POST)
