@@ -20,7 +20,7 @@ class Message(models.Model):
 
 
 class Group(models.Model):
-    group_name = models.CharField(max_length=20)
+    group_name = models.CharField(max_length=20,unique=True)
     members = models.ManyToManyField(User, related_name='group_members')
 
     def __str__(self):

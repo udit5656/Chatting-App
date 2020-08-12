@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -47,6 +48,7 @@ def chatpage(request, sender_id, reciever_id):
     return render(request, 'chatapp/chatpage.html', context)
 
 
+@login_required
 def group_chat(request):
     if request.method == 'POST':
         form = GroupSearchForm(request.POST)
@@ -77,16 +79,22 @@ def group_chat_messages(request, group_name, sender_id):
     return render(request, 'chatapp/group_chat.html', context)
 
 
+@login_required
 def create_group(request):
     if request.method == 'POST':
         form = GroupCreationForm(request.POST)
         if form.is_valid():
             group_name = form.cleaned_data['groupname']
-            group = Group.create(group_name)
-            group.save()
-            group.members.add(request.user)
-            context = {'group_name': group_name, 'sender_id': request.user.id}
-            return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
+            try:
+                group = Group.objects.all().get(group_name=group_name)
+                form.add_error('groupname', ValidationError('This group name is not available'))
+                return render(request, 'chatapp/create_group_page.html', {'form': form})
+            except Group.DoesNotExist:
+                group = Group.create(group_name)
+                group.save()
+                group.members.add(request.user)
+                context = {'group_name': group_name, 'sender_id': request.user.id}
+                return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
         return render(request, 'chatapp/create_group_page.html', {'form': form})
     form = GroupCreationForm()
     return render(request, 'chatapp/create_group_page.html', {'form': form})
