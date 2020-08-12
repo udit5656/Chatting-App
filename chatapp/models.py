@@ -20,15 +20,16 @@ class Message(models.Model):
 
 
 class Group(models.Model):
-    group_name = models.CharField(max_length=20,unique=True)
+    group_name = models.CharField(max_length=20, unique=True)
     members = models.ManyToManyField(User, related_name='group_members')
+    group_code = models.CharField(max_length=100)
 
     def __str__(self):
         return self.group_name
 
     @classmethod
-    def create(cls, group_name):
-        group = cls(group_name=group_name)
+    def create(cls, group_name,group_code):
+        group = cls(group_name=group_name,group_code=group_code)
         return group
 
 

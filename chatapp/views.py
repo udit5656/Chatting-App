@@ -55,9 +55,12 @@ def group_chat(request):
         form = GroupSearchForm(request.POST)
         if form.is_valid():
             try:
-                group_name = Group.objects.get(group_name=form.cleaned_data['groupname']).group_name
-                context = {'group_name': group_name, 'sender_id': request.user.id}
-                return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
+                group = Group.objects.get(group_name=form.cleaned_data['groupname'])
+                group_code = form.cleaned_data['groupcode']
+                if group_code == group.group_code:
+                    context = {'group_name': group.group_name, 'sender_id': request.user.id}
+                    return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
+                form.add_error('groupname',ValidationError('Wrong Credentials'))
             except Group.DoesNotExist:
                 form.add_error('groupname', ValidationError("Group doesn't exist"))
         return render(request, 'chatapp/group_page.html', {'form': form})
@@ -86,12 +89,13 @@ def create_group(request):
         form = GroupCreationForm(request.POST)
         if form.is_valid():
             group_name = form.cleaned_data['groupname']
+            group_code = form.cleaned_data['groupcode']
             try:
                 group = Group.objects.all().get(group_name=group_name)
                 form.add_error('groupname', ValidationError('This group name is not available'))
                 return render(request, 'chatapp/create_group_page.html', {'form': form})
             except Group.DoesNotExist:
-                group = Group.create(group_name)
+                group = Group.create(group_name=group_name, group_code=group_code)
                 group.save()
                 group.members.add(request.user)
                 context = {'group_name': group_name, 'sender_id': request.user.id}
