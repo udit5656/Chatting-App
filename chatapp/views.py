@@ -8,7 +8,7 @@ from django.views import View
 
 from .models import Message, Group, GroupMessage
 
-from .forms import UserSearchForm, MessageForm, GroupSearchForm
+from .forms import UserSearchForm, MessageForm, GroupSearchForm, GroupCreationForm
 
 
 # Create your views here.
@@ -75,3 +75,18 @@ def group_chat_messages(request, group_name, sender_id):
     group_messages = GroupMessage.objects.all().filter(group=group).order_by('send_time')
     context = {'group_name': group_name, 'sender_id': sender_id, 'messages': group_messages, 'form': form}
     return render(request, 'chatapp/group_chat.html', context)
+
+
+def create_group(request):
+    if request.method == 'POST':
+        form = GroupCreationForm(request.POST)
+        if form.is_valid():
+            group_name = form.cleaned_data['groupname']
+            group = Group.create(group_name)
+            group.save()
+            group.members.add(request.user)
+            context = {'group_name': group_name, 'sender_id': request.user.id}
+            return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
+        return render(request, 'chatapp/create_group_page.html', {'form': form})
+    form = GroupCreationForm()
+    return render(request, 'chatapp/create_group_page.html', {'form': form})

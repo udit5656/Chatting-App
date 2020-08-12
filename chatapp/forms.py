@@ -13,3 +13,7 @@ class MessageForm(forms.Form):
 
 class GroupSearchForm(forms.Form):
     groupname = forms.CharField(label="Group Name", max_length=50)
+
+
+class GroupCreationForm(forms.Form):
+    groupname = forms.CharField(label="Group Name", max_length=50)

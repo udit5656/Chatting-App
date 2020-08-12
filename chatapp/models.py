@@ -23,6 +23,14 @@ class Group(models.Model):
     group_name = models.CharField(max_length=20)
     members = models.ManyToManyField(User, related_name='group_members')
 
+    def __str__(self):
+        return self.group_name
+
+    @classmethod
+    def create(cls, group_name):
+        group = cls(group_name=group_name)
+        return group
+
 
 class GroupMessage(models.Model):
     message_text = models.CharField(max_length=200)
@@ -30,7 +38,10 @@ class GroupMessage(models.Model):
     sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
     group = models.ForeignKey(Group, related_name='related_group', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.message_text[:10]
+
     @classmethod
-    def create(cls,message_text,sender,group):
-        message=cls(message_text=message_text,sender=sender,group=group)
+    def create(cls, message_text, sender, group):
+        message = cls(message_text=message_text, sender=sender, group=group)
         return message

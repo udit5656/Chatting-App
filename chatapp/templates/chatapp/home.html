@@ -22,9 +22,18 @@
         <div class="col-sm"></div>
     </div>
     <div class="row">
-        <form method="get" action="{%url 'chatapp:group_chat'%}">
-            <input type="submit" value="For group chat">
-        </form>
+        <div class="col-sm"></div>
+        <div class="col-sm-8"> Want to talk in group? Try Group Chats</div>
+        <div class="col-sm"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-8">
+            <form method="get" action="{%url 'chatapp:group_chat'%}">
+                <input type="submit" class="btn btn-primary" value="For group chat">
+            </form>
+        </div>
+        <div class="col-sm"></div>
     </div>
 </div>
 {%endblock content%}
