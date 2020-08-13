@@ -23,6 +23,7 @@ class Group(models.Model):
     group_name = models.CharField(max_length=20, unique=True)
     members = models.ManyToManyField(User, related_name='group_members')
     group_code = models.CharField(max_length=100)
+    max_group_size = models.IntegerField(default=5)
 
     def __str__(self):
         return self.group_name
@@ -31,6 +32,12 @@ class Group(models.Model):
     def create(cls, group_name, group_code):
         group = cls(group_name=group_name, group_code=group_code)
         return group
+
+    def check_for_vacancy(self):
+        if self.members.all().count() < self.max_group_size:
+            return True
+        else:
+            return False
 
 
 class GroupMessage(models.Model):

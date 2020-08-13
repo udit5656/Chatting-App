@@ -57,11 +57,14 @@ def group_chat(request):
             try:
                 group = Group.objects.get(group_name=form.cleaned_data['groupname'])
                 group_code = form.cleaned_data['groupcode']
-                if group_code == group.group_code:
+                if group_code == group.group_code and group.check_for_vacancy():
                     context = {'group_name': group.group_name, 'sender_id': request.user.id}
                     group.members.add(request.user)
                     return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
-                form.add_error('groupname', ValidationError('Wrong Credentials'))
+                if not group.check_for_vacancy():
+                    form.add_error('groupname', ValidationError('Group is full'))
+                else:
+                    form.add_error('groupname', ValidationError('Wrong Credentials'))
             except Group.DoesNotExist:
                 form.add_error('groupname', ValidationError("Group doesn't exist"))
         return render(request, 'chatapp/group_page.html', {'form': form})
