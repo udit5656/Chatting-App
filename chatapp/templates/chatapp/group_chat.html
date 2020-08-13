@@ -4,21 +4,33 @@ Group Chat
 {%endblock title%}
 {%block content%}
 <div class="container">
-    {%for message in messages%}
-        <div class="row">
-            {%if message.sender.id == sender_id%}
-                <div class="col text-right">
-                    <div class="name">{{message.sender.username}}</div>
-                    {{message.message_text}}
+    <div class="row">
+        <div class="col-sm">
+            {%for message in messages%}
+                <div class="row">
+                    {%if message.sender.id == sender_id%}
+                        <div class="col text-right">
+                            <div class="name">{{message.sender.username}}</div>
+                            {{message.message_text}}
+                        </div>
+                    {%else%}
+                        <div class="col text-left">
+                            <div class="name">{{message.sender.username}}</div>
+                            {{message.message_text}}
+                        </div>
+                    {%endif%}
                 </div>
-            {%else%}
-                <div class="col text-left">
-                    <div class="name">{{message.sender.username}}</div>
-                    {{message.message_text}}
-                </div>
-            {%endif%}
+            {% endfor %}
         </div>
-    {% endfor %}
+        <div class="col-sm-2">
+            <div class="text-center">Members</div>
+            {%for member in members%}
+                <div class="member-names text-center">
+                    {{member.username}}
+                </div>
+            {%endfor%}
+        </div>
+    </div>
 </div>
 <form action="{% url 'chatapp:group_chat_messages' group_name sender_id %}" method="post">
     {%csrf_token%}

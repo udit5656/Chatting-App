@@ -59,8 +59,9 @@ def group_chat(request):
                 group_code = form.cleaned_data['groupcode']
                 if group_code == group.group_code:
                     context = {'group_name': group.group_name, 'sender_id': request.user.id}
+                    group.members.add(request.user)
                     return HttpResponseRedirect(reverse('chatapp:group_chat_messages', kwargs=context))
-                form.add_error('groupname',ValidationError('Wrong Credentials'))
+                form.add_error('groupname', ValidationError('Wrong Credentials'))
             except Group.DoesNotExist:
                 form.add_error('groupname', ValidationError("Group doesn't exist"))
         return render(request, 'chatapp/group_page.html', {'form': form})
@@ -79,7 +80,8 @@ def group_chat_messages(request, group_name, sender_id):
             message.save()
     form = MessageForm()
     group_messages = GroupMessage.objects.all().filter(group=group).order_by('send_time')
-    context = {'group_name': group_name, 'sender_id': sender_id, 'messages': group_messages, 'form': form}
+    context = {'group_name': group_name, 'sender_id': sender_id, 'messages': group_messages, 'form': form,
+               'members': group.members.all()}
     return render(request, 'chatapp/group_chat.html', context)
 
 

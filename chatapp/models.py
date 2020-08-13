@@ -28,8 +28,8 @@ class Group(models.Model):
         return self.group_name
 
     @classmethod
-    def create(cls, group_name,group_code):
-        group = cls(group_name=group_name,group_code=group_code)
+    def create(cls, group_name, group_code):
+        group = cls(group_name=group_name, group_code=group_code)
         return group
 
 
