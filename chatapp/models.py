@@ -24,6 +24,7 @@ class Group(models.Model):
     members = models.ManyToManyField(User, related_name='group_members')
     group_code = models.CharField(max_length=100)
     max_group_size = models.IntegerField(default=5)
+    admin = models.CharField(default='uditg',max_length=50)
 
     def __str__(self):
         return self.group_name
