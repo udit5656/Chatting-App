@@ -29,7 +29,8 @@ class HomeView(View):
 
     def get(self, request):
         form = UserSearchForm()
-        return render(request, 'chatapp/home.html', {'form': form})
+        user_groups = request.user.group_members.all()
+        return render(request, 'chatapp/home.html', {'form': form, 'user_groups': user_groups})
 
 
 def chatpage(request, sender_id, reciever_id):

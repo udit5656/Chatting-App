@@ -19,7 +19,15 @@
                 <input type="submit" class="form-control form-control-sm btn btn-primary" value="Search">
             </form>
         </div>
-        <div class="col-sm"></div>
+        <div class="col-sm">
+            {%for user_group in user_groups%}
+                <div>
+                    <a href="{%url 'chatapp:group_chat_messages' user_group.group_name user.id%}">
+                        {{user_group.group_name}}
+                    </a>
+                </div>
+            {%endfor%}
+        </div>
     </div>
     <div class="row">
         <div class="col-sm"></div>
