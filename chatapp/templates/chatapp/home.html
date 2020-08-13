@@ -1,25 +1,29 @@
 {%extends 'chatapp/base.html'%}
 {%block title%}Home{%endblock title%}
 {%block content%}
-<div class="container " id="form_container">
-    <div class="row ">
-        <div class="col-sm"></div>
-        <div class="col-sm-8">
-            <form method="post" action="{% url 'chatapp:home' %}" class="d-flex-row justify-content-center ">
+<div class="container" id="form_container">
+    <div class="row">
+        <div class="col-sm-3 "></div>
+        <div class="col-sm">
+            <form method="post" action="{% url 'chatapp:home' %}" class="d-flex-row">
                 {%csrf_token%}
                 {% for field in form%}
-                    <div class="form-group ">
+                    <span class="form-group ">
                         {{ field.errors }}
                         {{ field.label_tag }}
                         <span class=" w-100 ">
                             {{ field }}
                         </span>
-                    </div>
+                    </span>
                 {%endfor%}
-                <input type="submit" class="form-control form-control-sm btn btn-primary" value="Search">
+                <input type="submit" class="btn btn-primary" value="Search">
             </form>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"></div>
         <div class="col-sm">
+            Your groups:
             {%for user_group in user_groups%}
                 <div>
                     <a href="{%url 'chatapp:group_chat_messages' user_group.group_name user.id%}">
@@ -28,10 +32,11 @@
                 </div>
             {%endfor%}
         </div>
+        <div class="col-sm-3"></div>
     </div>
     <div class="row">
         <div class="col-sm"></div>
-        <div class="col-sm-8"> Want to talk in group? Try Group Chats</div>
+        <div class="col-sm-8">For joining or creating new group</div>
         <div class="col-sm"></div>
     </div>
     <div class="row">

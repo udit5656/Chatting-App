@@ -25,7 +25,8 @@ class HomeView(View):
                 return HttpResponseRedirect(reverse('chatapp:chatpage', kwargs=context))
             except User.DoesNotExist:
                 form.add_error('username', ValidationError("User Doesn't Exist"))
-        return render(request, 'chatapp/home.html', {'form': form})
+        user_groups = request.user.group_members.all()
+        return render(request, 'chatapp/home.html', {'form': form,'user_groups': user_groups})
 
     def get(self, request):
         form = UserSearchForm()
