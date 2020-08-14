@@ -26,7 +26,7 @@ class HomeView(View):
             except User.DoesNotExist:
                 form.add_error('username', ValidationError("User Doesn't Exist"))
         user_groups = request.user.group_members.all()
-        return render(request, 'chatapp/home.html', {'form': form,'user_groups': user_groups})
+        return render(request, 'chatapp/home.html', {'form': form, 'user_groups': user_groups})
 
     def get(self, request):
         form = UserSearchForm()
@@ -86,7 +86,7 @@ def group_chat_messages(request, group_name, sender_id):
     form = MessageForm()
     group_messages = GroupMessage.objects.all().filter(group=group).order_by('send_time')
     context = {'group_name': group_name, 'sender_id': sender_id, 'messages': group_messages, 'form': form,
-               'members': group.members.all()}
+               'members': group.members.all(), 'admin': group.admin}
     return render(request, 'chatapp/group_chat.html', context)
 
 
@@ -102,7 +102,7 @@ def create_group(request):
                 form.add_error('groupname', ValidationError('This group name is not available'))
                 return render(request, 'chatapp/create_group_page.html', {'form': form})
             except Group.DoesNotExist:
-                group = Group.create(group_name=group_name, group_code=group_code)
+                group = Group.create(group_name=group_name, group_code=group_code,admin=request.user.username)
                 group.save()
                 group.members.add(request.user)
                 context = {'group_name': group_name, 'sender_id': request.user.id}
@@ -110,3 +110,9 @@ def create_group(request):
         return render(request, 'chatapp/create_group_page.html', {'form': form})
     form = GroupCreationForm()
     return render(request, 'chatapp/create_group_page.html', {'form': form})
+
+
+def delete_group(request, group_name):
+    group = Group.objects.get(group_name=group_name)
+    group.delete()
+    return HttpResponseRedirect(reverse('chatapp:home'))

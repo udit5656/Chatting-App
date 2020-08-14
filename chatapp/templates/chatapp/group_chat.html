@@ -23,6 +23,14 @@ Group Chat
             {% endfor %}
         </div>
         <div class="col-sm-2">
+            <div>
+                {%if user.username == admin %}
+                <form method="post" action="{%url 'chatapp:delete_group' group_name%}">
+                    {%csrf_token%}
+                    <input type="submit" value="Delete Group" class="btn btn-danger">
+                </form>
+                {%endif%}
+            </div>
             <div class="text-center">Members</div>
             {%for member in members%}
                 <div class="member-names text-center">
