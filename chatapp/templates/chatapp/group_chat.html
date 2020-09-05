@@ -22,7 +22,7 @@ Group Chat
                 </div>
             {% endfor %}
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div>
                 {%if user.username == admin %}
                 <form method="post" action="{%url 'chatapp:delete_group' group_name%}">
@@ -31,6 +31,8 @@ Group Chat
                 </form>
                 {%endif%}
             </div>
+            <div class="text-center">Group Name: {{group_name}}</div>
+            <div class="text-center">Group Code: {{group_code}}</div>
             <div class="text-center">Members</div>
             {%for member in members%}
                 <div class="member-names text-center">
@@ -43,9 +45,9 @@ Group Chat
 <form action="{% url 'chatapp:group_chat_messages' group_name sender_id %}" method="post">
     {%csrf_token%}
     {{form}}
-    <input type="submit" value="Send">
+    <input type="submit" value="Send" class="btn btn-primary">
 </form>
 <form action="{%url 'chatapp:group_chat_messages' group_name sender_id %}">
-<input type="submit" value="Refresh">
+<input type="submit" value="Refresh" class="btn btn-primary">
 </form>
 {%endblock content%}
