@@ -1,9 +1,10 @@
 {%extends 'chatapp/base.html'%}
+{%load crispy_forms_tags %}
 {%block title%}Group Page{%endblock title%}
 {%block content%}
 <form action="{%url 'chatapp:group_chat'%}" method="post">
     {%csrf_token%}
-    {{form}}
+    {{form|crispy}}
     <input type="submit" class="btn btn-primary" value="Search">
 </form>
 Make a new group

@@ -8,12 +8,19 @@
         <title>{%block title%}{%endblock title%}</title>
     </head>
     <body>
-        {% if user.is_authenticated%}
-
-        {%else%}
-            <a href="{% url 'accounts:login'%}">Login</a>
-        {%endif%}
-        <a href="{%url 'chatapp:home'%}">Home</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">ConnectPeople</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="{%url 'chatapp:home'%}">Home</a>
+                {% if user.is_authenticated%}
+                    <a class="nav-item nav-link active" href="{%url 'accounts:logout'%}">Logout</a>
+                {%else%}
+                    <a class="nav-item nav-link active" href="{% url 'accounts:login'%}">Login</a>
+                {%endif%}
+            </div>
+          </div>
+        </nav>
         {%block content%}
         {%endblock content%}
     </body>
