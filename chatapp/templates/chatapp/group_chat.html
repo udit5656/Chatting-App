@@ -31,14 +31,16 @@ Group Chat
                 </form>
                 {%endif%}
             </div>
-            <div class="text-center">Group Name: {{group_name}}</div>
-            <div class="text-center">Group Code: {{group_code}}</div>
-            <div class="text-center">Members</div>
-            {%for member in members%}
-                <div class="member-names text-center">
-                    {{member.username}}
-                </div>
-            {%endfor%}
+            <div class="list-group">
+                <div class="text-center list-group-item">Group Name: {{group_name}}</div>
+                <div class="text-center list-group-item">Group Code: {{group_code}}</div>
+                <div class="text-center list-group-item">Members</div>
+                {%for member in members%}
+                    <div class="member-names text-center list-group-item">
+                        {{member.username}}
+                    </div>
+                {%endfor%}
+            </div>
         </div>
     </div>
 </div>

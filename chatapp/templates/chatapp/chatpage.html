@@ -28,9 +28,9 @@
 <form action="{% url 'chatapp:chatpage' sender.id reciever.id%}" method="post">
     {%csrf_token%}
     {{form}}
-    <input type="submit" value="Send">
+    <input type="submit" value="Send" class="btn btn-primary">
 </form>
 <form action="{%url 'chatapp:chatpage' sender.id reciever.id%}">
-<input type="submit" value="Refresh">
+    <input type="submit" value="Refresh" class="btn btn-primary">
 </form>
 {%endblock content%}

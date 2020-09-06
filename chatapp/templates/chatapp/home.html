@@ -22,10 +22,12 @@
     </div>
     <div class="row">
         <div class="col-sm-3"></div>
-        <div class="col-sm">
-            Your groups:
+        <div class="col-sm list-group">
+            <div class="list-group-item text-center">
+                Your groups:
+            </div>
             {%for user_group in user_groups%}
-                <div>
+                <div class="list-group-item text-center">
                     <a href="{%url 'chatapp:group_chat_messages' user_group.group_name user.id%}">
                         {{user_group.group_name}}
                     </a>
@@ -36,14 +38,14 @@
     </div>
     <div class="row">
         <div class="col-sm"></div>
-        <div class="col-sm-8">For joining or creating new group</div>
+        <div class="col-sm-8 text-center">For joining or creating new group</div>
         <div class="col-sm"></div>
     </div>
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm-8">
-            <form method="get" action="{%url 'chatapp:group_chat'%}">
-                <input type="submit" class="btn btn-primary" value="For group chat">
+            <form method="get" action="{%url 'chatapp:group_chat'%}" class="form-inline justify-content-center">
+                <button type="submit" class="btn btn-primary text-center">For Group Chat</button>
             </form>
         </div>
         <div class="col-sm"></div>
