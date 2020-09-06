@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .models import Message, Group, GroupMessage
+from .models import Message, Group, GroupMessage, Chat
 
 from .forms import UserSearchForm, MessageForm, GroupSearchForm, GroupCreationForm
 
@@ -31,7 +31,18 @@ class HomeView(View):
     def get(self, request):
         form = UserSearchForm()
         user_groups = request.user.group_members.all()
-        return render(request, 'chatapp/home.html', {'form': form, 'user_groups': user_groups})
+        user_chats = Chat.objects.filter(Q(member_one=request.user) | Q(member_two=request.user))
+        return render(request, 'chatapp/home.html',
+                      {'form': form, 'user_groups': user_groups, 'user_chats': user_chats})
+
+
+def user_chat_redirecter(request, sender_id, chat_id):
+    chat = Chat.objects.get(pk=chat_id)
+    if chat.member_one.pk == sender_id:
+        context = {'sender_id': sender_id, 'reciever_id': chat.member_two.pk}
+    else:
+        context = {'sender_id': sender_id, 'reciever_id': chat.member_one.pk}
+    return HttpResponseRedirect(reverse('chatapp:chatpage', kwargs=context))
 
 
 def chatpage(request, sender_id, reciever_id):
@@ -43,6 +54,14 @@ def chatpage(request, sender_id, reciever_id):
             message_text = form.cleaned_data['message_text']
             new_message = Message.create(msg_text=message_text, sender=sender, reciever=reciever)
             new_message.save()
+            if not Chat.objects.filter(Q(member_one=sender) | Q(member_one=reciever),
+                                       (Q(member_two=sender) | Q(member_two=reciever))).exists():
+                chat = Chat.create(latest_message=new_message, member_one=sender, member_two=reciever)
+                chat.save()
+            else:
+                chat = Chat.objects.get(Q(member_one=sender) | Q(member_one=reciever),
+                                        (Q(member_two=sender) | Q(member_two=reciever)))
+                chat.update_latest_message(new_message)
 
     messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
                                       (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")

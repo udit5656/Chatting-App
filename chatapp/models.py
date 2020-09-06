@@ -19,6 +19,31 @@ class Message(models.Model):
         return message
 
 
+class Chat(models.Model):
+    latest_message = models.ForeignKey(Message, related_name='latest_message', on_delete=models.CASCADE)
+    member_one = models.ForeignKey(User, related_name='member_one', on_delete=models.CASCADE)
+    member_two = models.ForeignKey(User, related_name='member_two', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.member_one.username
+
+    def get_other_member(self, member):
+        if self.member_one == member:
+            return self.member_two
+        else:
+            return self.member_one
+
+    @classmethod
+    def create(cls, latest_message, member_one, member_two):
+        chat = cls(latest_message=latest_message, member_one=member_one, member_two=member_two)
+        return chat
+
+    def update_latest_message(self, message):
+        chat = Chat.create(latest_message=message, member_one=self.member_one, member_two=self.member_two)
+        chat.save()
+        self.delete()
+
+
 class Group(models.Model):
     group_name = models.CharField(max_length=20, unique=True)
     members = models.ManyToManyField(User, related_name='group_members')

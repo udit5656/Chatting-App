@@ -1,25 +1,44 @@
 {%extends 'chatapp/base.html'%}
+{%load crispy_forms_tags %}
+{%load chats_extra %}
 {%block title%}Home{%endblock title%}
 {%block content%}
 <div class="container" id="form_container">
     <div class="row">
         <div class="col-sm-3 "></div>
         <div class="col-sm">
-            <form method="post" action="{% url 'chatapp:home' %}" class="d-flex-row">
+            <form method="post" action="{% url 'chatapp:home' %}" class="d-flex-row form-inline">
                 {%csrf_token%}
-                {% for field in form%}
-                    <span class="form-group ">
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                        <span class=" w-100 ">
-                            {{ field }}
-                        </span>
-                    </span>
-                {%endfor%}
+                {{form|crispy}}
                 <input type="submit" class="btn btn-primary" value="Search">
             </form>
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm list-group">
+            <div class="list-group-item text-center">
+                Your Chats:
+            </div>
+            {%for user_chat in user_chats%}
+                <div class="list-group-item text-center">
+                    <a href="{%url 'chatapp:user_chat_redirecter' user.id user_chat.id %}">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">{%other_member user_chat user%}:</div>
+                                <div class="col">{{user_chat.latest_message}}...</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {%endfor%}
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm list-group">
