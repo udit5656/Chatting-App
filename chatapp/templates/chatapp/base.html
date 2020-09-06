@@ -10,9 +10,9 @@
         <title>{%block title%}{%endblock title%}</title>
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand navbar-light bg-light">
       <a class="navbar-brand" href="#">ConnectPeople</a>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="{%url 'chatapp:home'%}">Home</a>
             {% if user.is_authenticated%}
@@ -21,7 +21,7 @@
                 <a class="nav-item nav-link active" href="{% url 'accounts:login'%}">Login</a>
             {%endif%}
         </div>
-      </div>
+
     </nav>
     <div id="content" class=" d-flex-row justify-content-center">
         {%block content%}
