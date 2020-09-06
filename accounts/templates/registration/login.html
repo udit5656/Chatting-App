@@ -9,6 +9,11 @@
     <title>Login Page</title>
 </head>
 <body>
+    {%if messages%}
+        {%for message in messages%}
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+        {%endfor%}
+    {%endif%}
     <nav class="navbar navbar-expand navbar-light bg-light">
       <a class="navbar-brand" href="#">ConnectPeople</a>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">

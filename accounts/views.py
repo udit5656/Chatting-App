@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,7 +16,8 @@ def login_user(request):
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('chatapp:home'))
-        return render(request, 'registration/login.html')
+        messages.add_message(request, messages.INFO, 'Wrong Credentials')
+        return HttpResponseRedirect(reverse('accounts:login'))
     return render(request, 'registration/login.html')
 
 
