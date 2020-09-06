@@ -1,4 +1,5 @@
 {%extends 'accounts/base.html'%}
+{% load crispy_forms_tags %}
 {%block title%}SignUp{%endblock title%}
 {%block content%}
 <div class="container " id="form_container">
@@ -7,15 +8,7 @@
         <div class="col-sm-8">
             <form method="post" action="{% url 'accounts:signup' %}" class="d-flex-row justify-content-center ">
                 {%csrf_token%}
-                {% for field in form%}
-                    <div class="form-group ">
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                        <span class=" w-100 ">
-                            {{ field }}
-                        </span>
-                    </div>
-                {%endfor%}
+                {{form|crispy}}
                 <input type="submit" class="btn btn-primary" value="SignUp">
             </form>
         </div>
