@@ -135,3 +135,13 @@ def delete_group(request, group_name):
     group = Group.objects.get(group_name=group_name)
     group.delete()
     return HttpResponseRedirect(reverse('chatapp:home'))
+
+
+def delete_chat_message(request, sender_id, reciever_id, message_id):
+    message = Message.objects.get(pk=message_id)
+    if Chat.objects.filter(latest_message=message).exists():
+        chat = Chat.objects.get(latest_message=message)
+        chat.delete_latest_message()
+    message.delete()
+    context = {'sender_id': sender_id, 'reciever_id': reciever_id}
+    return HttpResponseRedirect(reverse('chatapp:chatpage', kwargs=context))
