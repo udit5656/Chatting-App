@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'chatapp.apps.ChatappConfig',
     'accounts.apps.AccountsConfig',
+    'groupchatapp.apps.GroupchatappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

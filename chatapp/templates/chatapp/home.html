@@ -47,7 +47,7 @@
             </div>
             {%for user_group in user_groups%}
                 <div class="list-group-item text-center">
-                    <a href="{%url 'chatapp:group_chat_messages' user_group.group_name user.id%}">
+                    <a href="{%url 'groupchatapp:group_chat_messages' user_group.group_name user.id%}">
                         {{user_group.group_name}}
                     </a>
                 </div>
@@ -63,7 +63,7 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm-8">
-            <form method="get" action="{%url 'chatapp:group_chat'%}" class="form-inline justify-content-center">
+            <form method="get" action="{%url 'groupchatapp:group_chat'%}" class="form-inline justify-content-center">
                 <button type="submit" class="btn btn-primary text-center">For Group Chat</button>
             </form>
         </div>

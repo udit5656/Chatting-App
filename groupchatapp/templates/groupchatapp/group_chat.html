@@ -1,4 +1,4 @@
-{%extends 'chatapp/base.html'%}
+{%extends 'groupchatapp/base.html'%}
 {%block title%}
 Group Chat
 {%endblock title%}
@@ -41,7 +41,7 @@ Group Chat
         <div class="col-sm-3">
             <div>
                 {%if user.username == admin %}
-                <form method="post" action="{%url 'chatapp:delete_group' group_name%}">
+                <form method="post" action="{%url 'groupchatapp:delete_group' group_name%}">
                     {%csrf_token%}
                     <input type="submit" value="Delete Group" class="btn btn-danger">
                 </form>
@@ -60,12 +60,12 @@ Group Chat
         </div>
     </div>
 </div>
-<form action="{% url 'chatapp:group_chat_messages' group_name sender_id %}" method="post">
+<form action="{% url 'groupchatapp:group_chat_messages' group_name sender_id %}" method="post">
     {%csrf_token%}
     {{form}}
     <input type="submit" value="Send" class="btn btn-primary">
 </form>
-<form action="{%url 'chatapp:group_chat_messages' group_name sender_id %}">
+<form action="{%url 'groupchatapp:group_chat_messages' group_name sender_id %}">
 <input type="submit" value="Refresh" class="btn btn-primary">
 </form>
 {%endblock content%}

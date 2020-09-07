@@ -21,5 +21,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url='accounts/login/')),
     path('admin/', admin.site.urls),
     path('chatapp/', include('chatapp.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('groupchat/', include('groupchatapp.urls')),
 ]
