@@ -39,11 +39,14 @@ class Chat(models.Model):
         messages = Message.objects.filter((Q(sender=self.member_one) | Q(sender=self.member_two)),
                                           (Q(reciever=self.member_two) | Q(reciever=self.member_one))).order_by(
             '-send_time')
-        updated_latest_message = messages[1]
-        updated_chat = Chat.create(latest_message=updated_latest_message, member_one=self.member_one,
-                                   member_two=self.member_two)
-        updated_chat.save()
-        self.delete()
+        if messages.count() > 1:
+            updated_latest_message = messages[1]
+            updated_chat = Chat.create(latest_message=updated_latest_message, member_one=self.member_one,
+                                       member_two=self.member_two)
+            updated_chat.save()
+            self.delete()
+        else:
+            self.delete()
 
     @classmethod
     def create(cls, latest_message, member_one, member_two):
