@@ -14,12 +14,27 @@
     {%for message in messages%}
         <div class="row">
             {%if message.sender.id == sender.id%}
-                <div class="col text-right">
-                    {{message.msg_text}}
+                <div class="col"></div>
+                <div class="col text-right card text-black bg-light my-2" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{message.msg_text}}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-black">{{message.send_time}}</small>
+                    </div>
                 </div>
             {%else%}
-                <div class="col text-left">
-                    {{message.msg_text}}
+                <div class="col text-left card text-black bg-light my-2" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{message.msg_text}}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-black">{{message.send_time}}</small>
+                    </div>
                 </div>
             {%endif%}
         </div>
