@@ -2,7 +2,7 @@ from django import forms
 
 
 class MessageForm(forms.Form):
-    message_text = forms.CharField(label="Enter message", max_length=50)
+    message_text = forms.CharField(label="Enter message", max_length=500)
 
 
 class GroupSearchForm(forms.Form):

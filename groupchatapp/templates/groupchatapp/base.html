@@ -20,6 +20,7 @@
             {%else%}
                 <a class="nav-item nav-link active" href="{% url 'accounts:login'%}">Login</a>
             {%endif%}
+            <a class="nav-item nav-link" href="">Welcome {{user.username}}</a>
         </div>
 
     </nav>
