@@ -23,16 +23,16 @@
                 Your Chats:
             </div>
             {%for user_chat in user_chats%}
-                <div class="list-group-item text-center">
-                    <a href="{%url 'chatapp:user_chat_redirecter' user.id user_chat.id %}">
+                    <a class="list-group-item list-group-item-action"
+                       href="{%url 'chatapp:user_chat_redirecter' user.id user_chat.id %}">
                         <div class="container">
                             <div class="row">
-                                <div class="col">{%other_member user_chat user%}:</div>
+                                <div class="col-auto">{% other_member user_chat user %} </div>
                                 <div class="col">{{user_chat.latest_message}}...</div>
+                                <span class="col-auto badge badge-primary">{% unread_messages_count user_chat user %}</span>
                             </div>
                         </div>
                     </a>
-                </div>
             {%endfor%}
         </div>
         <div class="col-sm-3"></div>
@@ -46,11 +46,12 @@
                 Your groups:
             </div>
             {%for user_group in user_groups%}
-                <div class="list-group-item text-center">
-                    <a href="{%url 'groupchatapp:group_chat_messages' user_group.group_name user.id%}">
+
+                    <a class="list-group-item list-group-item-action text-center"
+                       href="{%url 'groupchatapp:group_chat_messages' user_group.group_name user.id%}">
                         {{user_group.group_name}}
                     </a>
-                </div>
+
             {%endfor%}
         </div>
         <div class="col-sm-3"></div>

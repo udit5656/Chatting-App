@@ -11,13 +11,14 @@ class Message(models.Model):
     send_time = models.DateTimeField(default=datetime.now)
     sender = models.ForeignKey(User, related_name='sender_user', on_delete=models.CASCADE)
     reciever = models.ForeignKey(User, related_name='reciever_user', on_delete=models.CASCADE)
+    unread = models.BooleanField(default=True)
 
     def __str__(self):
         return self.msg_text[:10]
 
     @classmethod
     def create(cls, msg_text, sender, reciever):
-        message = cls(msg_text=msg_text, sender=sender, reciever=reciever)
+        message = cls(msg_text=msg_text, sender=sender, reciever=reciever, unread=True)
         return message
 
 

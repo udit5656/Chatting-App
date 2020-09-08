@@ -35,6 +35,7 @@ class HomeView(View):
         return render(request, 'chatapp/home.html',
                       {'form': form, 'user_groups': user_groups, 'user_chats': user_chats})
 
+
 @login_required
 @user_can_see_chat
 def user_chat_redirecter(request, sender_id, chat_id):
@@ -45,11 +46,19 @@ def user_chat_redirecter(request, sender_id, chat_id):
         context = {'sender_id': sender_id, 'reciever_id': chat.member_one.pk}
     return HttpResponseRedirect(reverse('chatapp:chatpage', kwargs=context))
 
+
 @login_required
 @user_can_see_chat
 def chatpage(request, sender_id, reciever_id):
     sender = User.objects.get(pk=sender_id)
     reciever = User.objects.get(pk=reciever_id)
+    messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
+                                      (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")
+    unread_messages = Message.objects.filter(sender=reciever, reciever=sender, unread=True)
+    for unread_message in unread_messages:
+        unread_message.unread = False
+        unread_message.save()
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -65,11 +74,10 @@ def chatpage(request, sender_id, reciever_id):
                                         (Q(member_two=sender) | Q(member_two=reciever)))
                 chat.update_latest_message(new_message)
 
-    messages = Message.objects.filter((Q(sender=sender) | Q(sender=reciever)),
-                                      (Q(reciever=reciever) | Q(reciever=sender))).order_by("send_time")
     form = MessageForm()
     context = {'sender': sender, 'reciever': reciever, 'messages': messages, 'form': form}
     return render(request, 'chatapp/chatpage.html', context)
+
 
 @login_required
 @user_can_delete_message
