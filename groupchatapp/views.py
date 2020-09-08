@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from .forms import GroupCreationForm, GroupSearchForm, MessageForm
 from .models import Group, GroupMessage
+from .decorators import user_is_group_member, user_is_group_admin, user_can_delete_group_message, \
+    user_can_send_group_message
 
 
 @login_required
@@ -31,6 +33,9 @@ def group_chat(request):
     return render(request, 'groupchatapp/group_page.html', {'form': form})
 
 
+@login_required
+@user_is_group_member
+@user_can_send_group_message
 def group_chat_messages(request, group_name, sender_id):
     group = Group.objects.get(group_name=group_name)
     sender = User.objects.get(pk=sender_id)
@@ -69,12 +74,17 @@ def create_group(request):
     return render(request, 'groupchatapp/create_group_page.html', {'form': form})
 
 
+@login_required
+@user_is_group_admin
 def delete_group(request, group_name):
     group = Group.objects.get(group_name=group_name)
     group.delete()
     return HttpResponseRedirect(reverse('chatapp:home'))
 
 
+@login_required
+@user_is_group_member
+@user_can_delete_group_message
 def delete_group_message(request, group_name, message_id):
     message = GroupMessage.objects.get(pk=message_id)
     message.delete()
