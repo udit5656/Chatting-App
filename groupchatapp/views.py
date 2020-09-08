@@ -73,3 +73,10 @@ def delete_group(request, group_name):
     group = Group.objects.get(group_name=group_name)
     group.delete()
     return HttpResponseRedirect(reverse('chatapp:home'))
+
+
+def delete_group_message(request, group_name, message_id):
+    message = GroupMessage.objects.get(pk=message_id)
+    message.delete()
+    context = {'group_name': group_name, 'sender_id': request.user.id}
+    return HttpResponseRedirect(reverse('groupchatapp:group_chat_messages', kwargs=context))

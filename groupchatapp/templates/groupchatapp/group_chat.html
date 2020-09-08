@@ -19,6 +19,10 @@ Group Chat
                             </div>
                             <div class="card-footer">
                                 <small class="text-black">{{message.send_time}}</small>
+                                <a class="btn btn-primary"
+                                   href="{% url 'groupchatapp:delete_group_message' message.group.group_name message.pk%}">
+                                    Undo
+                                </a>
                             </div>
                         </div>
                     {%else%}
