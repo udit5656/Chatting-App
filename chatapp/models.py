@@ -26,6 +26,7 @@ class Chat(models.Model):
     latest_message = models.ForeignKey(Message, related_name='latest_message', on_delete=models.CASCADE)
     member_one = models.ForeignKey(User, related_name='member_one', on_delete=models.CASCADE)
     member_two = models.ForeignKey(User, related_name='member_two', on_delete=models.CASCADE)
+    last_message_time = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return self.member_one.username

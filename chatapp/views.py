@@ -31,7 +31,8 @@ class HomeView(View):
     def get(self, request):
         form = UserSearchForm()
         user_groups = request.user.group_members.all()
-        user_chats = Chat.objects.filter(Q(member_one=request.user) | Q(member_two=request.user))
+        user_chats =Chat.objects.filter(Q(member_one=request.user) | Q(member_two=request.user)).order_by(
+            '-last_message_time')
         return render(request, 'chatapp/home.html',
                       {'form': form, 'user_groups': user_groups, 'user_chats': user_chats})
 
