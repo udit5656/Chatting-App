@@ -14,7 +14,9 @@ class Message(models.Model):
     unread = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.msg_text[:10]
+        if len(self.msg_text) <= 30:
+            return self.msg_text[:30]
+        return self.msg_text[:30] + "..."
 
     @classmethod
     def create(cls, msg_text, sender, reciever):

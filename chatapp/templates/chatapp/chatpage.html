@@ -23,7 +23,12 @@
                     </div>
                     <div class="card-footer">
                         <small class="text-black">{{message.send_time}}</small>
-                        <a class="btn btn-primary"
+                            {% if message.unread%}
+                                <small class="text-black">Sent</small>
+                            {% else %}
+                                <small class="text-primary"> Read </small>
+                            {% endif %}
+                        <a class="btn btn-primary btn-sm"
                            href="{%url 'chatapp:delete_chat_message' message.sender_id message.reciever_id message.id%}">
                             Undo
                         </a>

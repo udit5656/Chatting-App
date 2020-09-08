@@ -28,7 +28,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-auto">{% other_member user_chat user %} </div>
-                                <div class="col">{{user_chat.latest_message}}...</div>
+                                <div class="col text-primary">{{user_chat.latest_message}}</div>
                                 <span class="col-auto badge badge-primary">{% unread_messages_count user_chat user %}</span>
                             </div>
                         </div>
@@ -46,12 +46,15 @@
                 Your groups:
             </div>
             {%for user_group in user_groups%}
-
-                    <a class="list-group-item list-group-item-action text-center"
-                       href="{%url 'groupchatapp:group_chat_messages' user_group.group_name user.id%}">
-                        {{user_group.group_name}}
-                    </a>
-
+                <a class="list-group-item list-group-item-action text-primary"
+                   href="{%url 'groupchatapp:group_chat_messages' user_group.group_name user.id%}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-auto">{{user_group.group_name}}</div>
+                            <div class="col text-primary">{% latest_group_message_info user user_group %}</div>
+                        </div>
+                    </div>
+                </a>
             {%endfor%}
         </div>
         <div class="col-sm-3"></div>

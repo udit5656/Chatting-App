@@ -31,9 +31,10 @@ class GroupMessage(models.Model):
     send_time = models.DateTimeField(default=datetime.now)
     sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
     group = models.ForeignKey(Group, related_name='related_group', on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.message_text[:10]
+        return self.message_text[:25]
 
     @classmethod
     def create(cls, message_text, sender, group):

@@ -19,7 +19,7 @@ Group Chat
                             </div>
                             <div class="card-footer">
                                 <small class="text-black">{{message.send_time}}</small>
-                                <a class="btn btn-primary"
+                                <a class="btn btn-primary btn-sm"
                                    href="{% url 'groupchatapp:delete_group_message' message.group.group_name message.pk%}">
                                     Undo
                                 </a>
@@ -67,9 +67,9 @@ Group Chat
 <form action="{% url 'groupchatapp:group_chat_messages' group_name sender_id %}" method="post">
     {%csrf_token%}
     {{form}}
-    <input type="submit" value="Send" class="btn btn-primary">
+    <input type="submit" value="Send" class="btn btn-primary btn-md">
 </form>
-<form action="{%url 'groupchatapp:group_chat_messages' group_name sender_id %}">
-<input type="submit" value="Refresh" class="btn btn-primary">
+<form class="" action="{%url 'groupchatapp:group_chat_messages' group_name sender_id %}">
+    <input type="submit" value="Refresh" class="btn btn-primary btn-sm">
 </form>
 {%endblock content%}
