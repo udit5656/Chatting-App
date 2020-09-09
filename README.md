@@ -7,30 +7,12 @@ Presently there is no webapp available which lets people chats with an easy inte
 ConnectPeople app just asks for your email id, username and password and let you Connect with your friends.
 Moreover through this webapp, I am learning and gaining experience in Django.
 
-# ScreenShots
-![alt text][login]
+# Demo
 
-[login]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/LogIn.jpg "Login"
+![alt text][demo]
 
-![alt text][home]
+[demo]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/demo_gif.gif "Demo"
 
-[home]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/home.jpg "Home"
-
-![alt text][chat]
-
-[chat]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/Chat.jpg "Chat"
-
-![alt text][groupsearch]
-
-[groupsearch]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/Group_Search.jpg "Group Search"
-
-![alt text][newgroupcreate]
-
-[newgroupcreate]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/New_group_create.jpg "New Group Create"
-
-![alt text][groupchat]
-
-[groupchat]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/group_chat.jpg "Group Chat"
 
 # Technologies/Frameworks Used
 
