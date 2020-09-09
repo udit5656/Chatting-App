@@ -1,1 +1,1 @@
-web: gunicorn CoonectPeople.wsgi
+web: gunicorn ConnectPeople.wsgi
