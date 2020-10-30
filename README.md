@@ -7,12 +7,14 @@ Presently there is no webapp available which lets people chats with an easy inte
 ConnectPeople app just asks for your email id, username and password and let you Connect with your friends.
 Moreover through this webapp, I am learning and gaining experience in Django.
 
+## Project hosted on:
+https://udit5656.herokuapp.com/
+
 # Demo
 
 ![alt text][demo]
 
 [demo]: https://github.com/udit5656/Chatting-App/blob/master/screenshots/demo_gif.gif "Demo"
-
 
 # Technologies/Frameworks Used
 
